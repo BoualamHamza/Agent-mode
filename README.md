@@ -1,4 +1,77 @@
-# Agent-mode
+# AI Coding Agent (LangChain, Python)
+
+This project is an AI-powered coding assistant built using Python and LangChain. It's designed to understand high-level coding prompts, interact with a codebase, and perform tasks like file manipulation, command execution, and version control.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+1.  **Python:** Ensure you have Python 3.8+ installed.
+2.  **Ollama:** This agent uses [Ollama](https://ollama.com/) to run local LLMs.
+    *   Install Ollama on your system.
+    *   Pull a model that the agent will use, for example, Llama 2:
+        ```bash
+        ollama pull llama2
+        ```
+    *   Ensure Ollama is running before starting the agent.
+3.  **Git:** Git must be installed and configured for the `GitCommit` tool to function.
+
+### Setup & Installation
+
+1.  **Clone the repository:**
+    ```bash
+    # If you are working within a git-managed environment already, skip this.
+    # git clone <repository_url>
+    # cd <repository_directory>
+    ```
+
+2.  **Create a virtual environment (recommended):**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
+
+3.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Running the Agent
+
+Execute the main agent script:
+
+```bash
+python agent.py
+```
+
+By default, this will run a pre-defined task (e.g., summarizing project goals into `summary.txt`). You can modify the `task_prompt` variable in the `if __name__ == "__main__":` block in `agent.py` to change the agent's objective.
+
+### Logging
+
+*   The agent's thought process (if using a ReAct agent with `verbose=True`) will be printed to the console.
+*   Detailed logs are also saved to `agent.log`.
+
+## 🛠️ Implemented Tools
+
+The agent currently has access to the following tools:
+
+*   **ReadFile:** Reads content from a specified file.
+*   **WriteFile:** Writes content to a specified file.
+*   **RunShellCommand:** Executes shell commands (with basic safety checks).
+*   **RunTests:** A stub function to simulate running project tests.
+*   **GitCommit:** Commits changes to the Git repository.
+
+## 🤖 Agent Architecture
+
+*   **Core Logic:** `agent.py` orchestrates the agent's operations.
+*   **LLM Integration:** Uses LangChain to interface with an LLM (defaults to Ollama with a model like Llama 2).
+*   **Tooling:** Custom tools are defined in the `tools/` directory (`file_system.py`, `shell.py`, `testing.py`, `git.py`).
+*   **Workflow:** Employs a ReAct-style agent loop (plan, act, observe) provided by LangChain.
+
+---
+## 📚 Initial Research & Roadmap Ideas
+
+# Agent-mode (Original Title)
 ## Overview
 
 Building a coding agent like Claude Code or GitHub Copilot Agent Mode involves integrating a large language model (LLM) with tools that allow it to read, modify, and interact with codebases, automate coding workflows, and execute commands. These agents can perform tasks such as generating code, refactoring, running tests, and even managing project files autonomously[3][5][8].
