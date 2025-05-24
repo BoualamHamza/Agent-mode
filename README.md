@@ -2,7 +2,37 @@
 
 This project is an AI-powered coding assistant built using Python and LangChain. It's designed to understand high-level coding prompts, interact with a codebase, and perform tasks like file manipulation, command execution, and version control.
 
-## 🚀 Quick Start
+## 🤖 LangGraph Agent (Orchestrator-Worker Model)
+
+This agent implements a more advanced orchestrator-worker pattern using LangGraph.
+-   **Orchestrator:** An LLM-driven agent that receives a user goal, creates a multi-step plan, and manages its execution.
+-   **Generic Worker:** An LLM-driven agent that executes specific sub-tasks delegated by the orchestrator, using a set of primitive tools (file operations, shell commands, git, testing).
+
+### Prerequisites
+
+Ensure you have followed the general project prerequisites (Python, Ollama).
+The necessary Python packages, including `langgraph`, are listed in `requirements.txt`. (Note: Ensure `langgraph` is added to `requirements.txt` if not already present).
+
+### Running the LangGraph Agent
+
+Execute the main LangGraph agent script:
+
+```bash
+python langgraph_agent.py
+```
+
+By default, this will run a pre-defined task (e.g., reading README, writing a part of it to a new file, and committing). You can modify the `user_goal` variable in the `if __name__ == "__main__":` block in `langgraph_agent.py` to change the agent's objective.
+
+### Logging
+
+*   The agent's detailed thought processes (orchestrator planning, worker tool usage) will be printed to the console (due to `verbose=True` settings and custom logging).
+*   Detailed logs are also saved to `langgraph_agent.log`.
+
+---
+
+## 🚀 Basic Agent (agent.py)
+
+_This describes the original, simpler agent implementation. For the more advanced orchestrator-worker model, see the 'LangGraph Agent' section above._
 
 ### Prerequisites
 
@@ -53,7 +83,7 @@ By default, this will run a pre-defined task (e.g., summarizing project goals in
 
 ## 🛠️ Implemented Tools
 
-The agent currently has access to the following tools:
+The agent currently has access to the following tools (used by both `agent.py`'s ReAct agent and `langgraph_agent.py`'s Generic Worker):
 
 *   **ReadFile:** Reads content from a specified file.
 *   **WriteFile:** Writes content to a specified file.
@@ -61,12 +91,14 @@ The agent currently has access to the following tools:
 *   **RunTests:** A stub function to simulate running project tests.
 *   **GitCommit:** Commits changes to the Git repository.
 
-## 🤖 Agent Architecture
+## 🤖 Agent Architecture (General)
 
-*   **Core Logic:** `agent.py` orchestrates the agent's operations.
+*   **Core Logic:** `agent.py` (simple agent) and `langgraph_agent.py` (orchestrator-worker agent) orchestrate operations.
 *   **LLM Integration:** Uses LangChain to interface with an LLM (defaults to Ollama with a model like Llama 2).
 *   **Tooling:** Custom tools are defined in the `tools/` directory (`file_system.py`, `shell.py`, `testing.py`, `git.py`).
-*   **Workflow:** Employs a ReAct-style agent loop (plan, act, observe) provided by LangChain.
+*   **Workflow:** 
+    *   `agent.py`: Employs a ReAct-style agent loop.
+    *   `langgraph_agent.py`: Uses a stateful graph to manage an orchestrator (planner) and worker (tool executor) flow.
 
 ---
 ## 📚 Initial Research & Roadmap Ideas
