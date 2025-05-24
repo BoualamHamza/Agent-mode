@@ -1,4 +1,109 @@
-# Agent-mode
+# AI Coding Agent (LangChain, Python)
+
+This project is an AI-powered coding assistant built using Python and LangChain. It's designed to understand high-level coding prompts, interact with a codebase, and perform tasks like file manipulation, command execution, and version control.
+
+## 🤖 LangGraph Agent (Orchestrator-Worker Model)
+
+This agent implements a more advanced orchestrator-worker pattern using LangGraph.
+-   **Orchestrator:** An LLM-driven agent that receives a user goal, creates a multi-step plan, and manages its execution.
+-   **Generic Worker:** An LLM-driven agent that executes specific sub-tasks delegated by the orchestrator, using a set of primitive tools (file operations, shell commands, git, testing).
+
+### Prerequisites
+
+Ensure you have followed the general project prerequisites (Python, Ollama).
+The necessary Python packages, including `langgraph`, are listed in `requirements.txt`. (Note: Ensure `langgraph` is added to `requirements.txt` if not already present).
+
+### Running the LangGraph Agent
+
+Execute the main LangGraph agent script:
+
+```bash
+python langgraph_agent.py
+```
+
+By default, this will run a pre-defined task (e.g., reading README, writing a part of it to a new file, and committing). You can modify the `user_goal` variable in the `if __name__ == "__main__":` block in `langgraph_agent.py` to change the agent's objective.
+
+### Logging
+
+*   The agent's detailed thought processes (orchestrator planning, worker tool usage) will be printed to the console (due to `verbose=True` settings and custom logging).
+*   Detailed logs are also saved to `langgraph_agent.log`.
+
+---
+
+## 🚀 Basic Agent (agent.py)
+
+_This describes the original, simpler agent implementation. For the more advanced orchestrator-worker model, see the 'LangGraph Agent' section above._
+
+### Prerequisites
+
+1.  **Python:** Ensure you have Python 3.8+ installed.
+2.  **Ollama:** This agent uses [Ollama](https://ollama.com/) to run local LLMs.
+    *   Install Ollama on your system.
+    *   Pull a model that the agent will use, for example, Llama 2:
+        ```bash
+        ollama pull llama2
+        ```
+    *   Ensure Ollama is running before starting the agent.
+3.  **Git:** Git must be installed and configured for the `GitCommit` tool to function.
+
+### Setup & Installation
+
+1.  **Clone the repository:**
+    ```bash
+    # If you are working within a git-managed environment already, skip this.
+    # git clone <repository_url>
+    # cd <repository_directory>
+    ```
+
+2.  **Create a virtual environment (recommended):**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
+
+3.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Running the Agent
+
+Execute the main agent script:
+
+```bash
+python agent.py
+```
+
+By default, this will run a pre-defined task (e.g., summarizing project goals into `summary.txt`). You can modify the `task_prompt` variable in the `if __name__ == "__main__":` block in `agent.py` to change the agent's objective.
+
+### Logging
+
+*   The agent's thought process (if using a ReAct agent with `verbose=True`) will be printed to the console.
+*   Detailed logs are also saved to `agent.log`.
+
+## 🛠️ Implemented Tools
+
+The agent currently has access to the following tools (used by both `agent.py`'s ReAct agent and `langgraph_agent.py`'s Generic Worker):
+
+*   **ReadFile:** Reads content from a specified file.
+*   **WriteFile:** Writes content to a specified file.
+*   **RunShellCommand:** Executes shell commands (with basic safety checks).
+*   **RunTests:** A stub function to simulate running project tests.
+*   **GitCommit:** Commits changes to the Git repository.
+
+## 🤖 Agent Architecture (General)
+
+*   **Core Logic:** `agent.py` (simple agent) and `langgraph_agent.py` (orchestrator-worker agent) orchestrate operations.
+*   **LLM Integration:** Uses LangChain to interface with an LLM (defaults to Ollama with a model like Llama 2).
+*   **Tooling:** Custom tools are defined in the `tools/` directory (`file_system.py`, `shell.py`, `testing.py`, `git.py`).
+*   **Workflow:** 
+    *   `agent.py`: Employs a ReAct-style agent loop.
+    *   `langgraph_agent.py`: Uses a stateful graph to manage an orchestrator (planner) and worker (tool executor) flow.
+
+---
+## 📚 Initial Research & Roadmap Ideas
+
+# Agent-mode (Original Title)
 ## Overview
 
 Building a coding agent like Claude Code or GitHub Copilot Agent Mode involves integrating a large language model (LLM) with tools that allow it to read, modify, and interact with codebases, automate coding workflows, and execute commands. These agents can perform tasks such as generating code, refactoring, running tests, and even managing project files autonomously[3][5][8].
