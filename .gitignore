@@ -1,1 +1,18 @@
 /agent_mode
+
+/langgraph_agent.log
+
+.env
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+# Ignore virtual environment directories
+venv/
+# Ignore environment variable files
+.env.local
+# Ignore logs
+logs/
+# Ignore coverage reports
+coverage.xml
