@@ -1,0 +1,30 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 5px;
+    margin: 20px auto;
+    width: 315px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
+
+.winning-line {
+    /* Style for the winning line */
+    position: absolute;
+    background-color: red; /* Example color */
+    height: 5px; /* Example thickness */
+    width: 300px; /* Adjust as needed */
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+}
